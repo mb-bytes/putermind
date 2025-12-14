@@ -61,10 +61,10 @@ Mobile Home and Chat View
 ## Getting Started
 
 ### Option 1: Clone the Repository
-
 ```bash
 git clone https://github.com/mb-bytes/putermind.git
 cd putermind
+```
 
 
 ### Option 2: Direct Open
