@@ -23,8 +23,20 @@ Desktop Home and Chat View
 <img width="1920" height="909" alt="chatview" src="https://github.com/user-attachments/assets/4187ec6e-1178-4555-82af-c036c52d1f37" />
 
 Mobile Home and Chat View 
-<img width="1920" height="909" alt="chatview" src="https://github.com/user-attachments/assets/9b8c48b5-96f1-4bcc-a008-41dbdb2bc66a" />
-<img width="411" height="794" alt="chat-mob" src="https://github.com/user-attachments/assets/e7578a9f-fb7a-41af-a9c4-c5baa77ab4c0" />
+<div align="center">
+  <table>
+    <tr>
+      <td width="50%">
+        <h3 align="center">Home Screen</h3>
+        <img src="https://github.com/user-attachments/assets/b4c391f7-2c34-4c4a-9bb8-b60988204b1c" width="100%" alt="mob-home" />
+      </td>
+      <td width="50%">
+        <h3 align="center">Chat Interface</h3>
+        <img src="https://github.com/user-attachments/assets/e7578a9f-fb7a-41af-a9c4-c5baa77ab4c0" width="100%" alt="chat-mob" />
+      </td>
+    </tr>
+  </table>
+</div>
 
 
 ### Image Generation & Analysis
