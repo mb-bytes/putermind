@@ -64,6 +64,7 @@ Mobile Home and Chat View
 ```bash
 git clone [https://github.com/mb-bytes/putermind.git](https://github.com/mb-bytes/putermind.git)
 cd putermind
+```
 
 ### Option 2: Direct Open
 Simply open `index.html` in your browser.
