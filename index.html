@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PuterMind</title>
+  <link rel="icon" href="./assests/puter-titleLogo.png" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://js.puter.com/v2/"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  </script>
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+  <div class="main" id="login-view">
+    <nav class="nav-login">
+      <div class="nav-left">
+        <img src="assests/PuterLogo-removebg-preview.png" />
+      </div>
+      <div class="nav-mid hide">
+        <a href="#" id="nav-home" class="nav-active">Home</a>
+        <a href="#" id="nav-features">Features</a>
+        <a href="https://docs.puter.com/" target="_blank">What's Puter.js?</a>
+        <a href="#" id="nav-about">About</a>
+      </div>
+      <div class="nav-right">
+        <a href="https://github.com/mb-bytes/putermind" target="_blank">
+          <button type="button">
+            <i class="fa-solid fa-star"></i>
+            <span>Star this repo</span>
+          </button>
+        </a>
+      </div>
+    </nav>
+
+    <main class="hero-content">
+      <div class="hero-left hide">
+        <div class="welcome-text">
+          <h1>Welcome to Puter<span class="mind">Mind</span></h1>
+          <div class="powered-badge">
+            <span class="badge-dot"></span>
+            Powered by Puter.js
+          </div>
+        </div>
+        <p>
+          This AI assistant is built on the Puter.js framework, allowing it to
+          function entirely without a traditional backend server. By
+          leveraging cloud-native capabilities directly in the browser, it
+          provides a faster, more secure, and seamless conversational
+          experience.
+        </p>
+      </div>
+      <div class="hero-right">
+        <h2>Ready to get started?</h2>
+        <button type="button" class="con-puter" id="login-btn">
+          <i class="fa-solid fa-right-to-bracket"></i>Enter PuterMind
+        </button>
+        <div class="features-list">
+          <div class="features">
+            <div class="feature-icon">
+              <i class="fa-solid fa-bolt-lightning"></i>
+            </div>
+            <span>Fast</span>
+          </div>
+          <div class="features">
+            <div class="feature-icon">
+              <i class="fa-solid fa-key"></i>
+            </div>
+            <span>Secure & Private</span>
+          </div>
+          <div class="features">
+            <div class="feature-icon">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <span>Smart</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="hero-footer">
+      <p>Connect</p>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/atique-shaikh-387468384/" target="_blank" title="LinkedIn">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+        <a href="https://x.com/mb_bytes" target="_blank" title="X (Twitter)">
+          <i class="fa-brands fa-x-twitter"></i>
+        </a>
+        <a href="https://github.com" target="_blank" title="GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </div>
+    </footer>
+
+    <div class="feature-content hidden">
+      <div class="feature-title">
+        <h2>What makes Puter<span class="mind">Mind</span> special?</h2>
+      </div>
+      <div class="feature-box">
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <i class="fa-solid fa-bolt-lightning"></i>
+          </div>
+          <h3>Fast Performance</h3>
+          <p>Built on Puter.js, PuterMind runs directly in your browser, removing backend delays.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h3>Secure and Private</h3>
+          <p>No external servers, no data collection. PuterMind ensures a private and secure experience by design.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <h3>Smart Assistant</h3>
+          <p>PuterMind understands natural language, explains concepts, helps with coding, and assists across many
+            tasks. </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <i class="fa fa-robot"></i>
+          </div>
+          <h3>Multiple AI Models</h3>
+          <p>Choose between different AI models depending on your needs—whether you want faster responses, stronger
+            reasoning, or code-focused intelligence. Switching models is seamless and flexible.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <i class="fa-solid fa-feather"></i>
+          </div>
+          <h3>Lightweight and Efficient</h3>
+          <p>Designed to run smoothly on any modern browser, PuterMIND loads fast and uses minimal resources. No
+            installations or powerful hardware are required.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <i class="fa-solid fa-code"></i>
+          </div>
+          <h3>Developer Friendly and Customizable</h3>
+          <p>Developers can easily extend PuterMind by customizing actions, UI components, or even integrating new
+            models using the modular Puter.js framework.</p>
+        </div>
+      </div>
+    </div>
+    <div id="about-sec" class="about-sec hidden">
+      <div class="about-title">
+        <h2>Some info about Puter<span class="mind">Mind</span></h2>
+      </div>
+      <div class="about-content">
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <h3>What is PuterMind?</h3>
+          <p>PuterMind is a browser-based AI assistant built on the Puter.js framework. It provides fast, private, and
+            intelligent responses without relying on a traditional backend.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <i class="fa-solid fa-gears"></i>
+          </div>
+          <h3>How does it work?</h3>
+          <p>PuterMind uses Puter.js to handle logic directly on the client side. Instead of sending every request to a
+            remote server, most operations happen inside your browser.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <h3>Is it secure?</h3>
+          <p>Yes, PuterMind is secure because it doesn't store any data on a remote server. All data is stored locally
+            in your browser.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <h3>What makes it different?</h3>
+          <p>
+          <ul>
+            <li>No backend Required</li>
+            <li>Choose from multiple AI models</li>
+            <li>Works on any browser</li>
+            <li>Responsive design, works in mobile browsers as well</li>
+          </ul>
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <i class="fa-solid fa-database"></i>
+          </div>
+          <h3>How does it store chat history?</h3>
+          <p>PuterMind uses Puter's KV (Key–Value) storage system to securely store small pieces of user data such as
+            preferences, settings, and configurations.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="main hidden" id="chat-view">
+    <nav class="nav-login new-nav">
+      <div class="nav-left hide">
+        <img src="assests/PuterLogo-removebg-preview.png" />
+      </div>
+
+      <div class="nav-mid mob-remain">
+        <select id="model-select" class="model-dropdown"></select>
+        <button id="mode-toggle-btn" class="mode-toggle-btn" title="Switch to Image Mode">
+          <label for="mode-toggle-btn">Current Mode: </label>
+          <i class="fa-solid fa-comment"></i>
+          <span class="mode-label">Chat</span>
+        </button>
+      </div>
+
+      <div class="nav-right">
+        <button id="info-btn" class="header-btn" title="Check Credits">
+          <i class="fa-solid fa-wallet"></i> Credits
+        </button>
+        <button id="signout-btn" class="header-btn danger" title="Sign Out">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </nav>
+
+    <main class="chat-container">
+      <div id="chat-area" class="chat-messages"></div>
+
+      <div id="file-preview-area" class="file-preview hidden">
+        <span id="file-name">image.png</span>
+        <button id="remove-file-btn">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
+
+      <div class="chat-input-area">
+        <form id="chat-form" class="input-wrapper">
+          <input type="file" id="file-input" style="display: none"
+            accept="image/*,.txt,.md,.js,.py,.html,.css,.json,.pdf,.docx,.doc" />
+
+          <button type="button" id="attach-btn" class="attach-btn" title="Upload Image or Text File">
+            <i class="fa-solid fa-paperclip"></i>
+          </button>
+
+          <button type="button" id="clear-chat-btn" class="clear-chat-btn" title="Clear Chat">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+
+          <input type="text" id="message-input" placeholder="Type your message..." autocomplete="off" />
+
+          <button type="submit" id="send-btn" disabled>
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
+    </main>
+  </div>
+  </main>
+  </div>
+
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</body>
+
+</html>
