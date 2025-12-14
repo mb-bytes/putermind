@@ -63,7 +63,7 @@ Mobile Home and Chat View
 ### Option 1: Clone the Repository
 
 ```bash
-git clone [https://github.com/mb-bytes/putermind.git](https://github.com/mb-bytes/putermind.git)
+git clone https://github.com/mb-bytes/putermind.git
 cd putermind
 
 
