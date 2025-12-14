@@ -18,20 +18,16 @@ A browser-based AI assistant powered by [Puter.js](https://puter.com/) — no ba
 - 🎯 **Responsive Design** — Works seamlessly on both desktop and mobile
 
 ## Screenshots
-
-| Desktop Interface | Mobile Interface |
-|:-----------------:|:----------------:|
-| ![Desktop Home and Chat View] 
+Desktop Home and Chat View
 <img width="1920" height="909" alt="homepage" src="https://github.com/user-attachments/assets/01cdd36f-7acb-4cca-b387-94cc0d3581c7" /> 
 <img width="1920" height="909" alt="chatview" src="https://github.com/user-attachments/assets/4187ec6e-1178-4555-82af-c036c52d1f37" />
 
-|![Mobile Home and Chat View] 
+Mobile Home and Chat View 
 <img width="1920" height="909" alt="chatview" src="https://github.com/user-attachments/assets/9b8c48b5-96f1-4bcc-a008-41dbdb2bc66a" />
 <img width="411" height="794" alt="chat-mob" src="https://github.com/user-attachments/assets/e7578a9f-fb7a-41af-a9c4-c5baa77ab4c0" />
-|
+
 
 ### Image Generation & Analysis
-![Image Gen Feature]
 <img width="1920" height="909" alt="gen-image" src="https://github.com/user-attachments/assets/8bc0bf17-8d7e-4c76-8b0f-80eb0bbf2911" />
 
 ## Demo
