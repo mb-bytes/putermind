@@ -7,15 +7,15 @@ A browser-based AI assistant powered by [Puter.js](https://puter.com/) — no ba
 
 ## Features
 
-- 💬 **AI Chat** — Conversational AI with streaming responses
-- 🎨 **Image Generation** — Create images from text descriptions
-- 🤖 **Multiple AI Models** — Choose from Gemini, GPT, Claude, and Grok
-- 📄 **Document Analysis** — Upload and analyze PDF, DOCX, TXT, and code files
-- 🖼️ **Image Analysis** — Upload images for AI-powered analysis
-- 🔐 **Secure & Private** — No external backend, data stays in your browser
-- 💾 **Chat History** — Persisted using Puter's cloud KV storage
-- 📱 **PWA Support** — Installable on mobile devices, to install on mobiles simply add the demo link to home screen.
-- 🎯 **Responsive Design** — Works seamlessly on both desktop and mobile
+- **AI Chat** — Conversational AI with streaming responses
+- **Image Generation** — Create images from text descriptions
+- **Multiple AI Models** — Choose from Gemini, GPT, Claude, and Grok
+- **Document Analysis** — Upload and analyze PDF, DOCX, TXT, and code files
+- **Image Analysis** — Upload images for AI-powered analysis
+- **Secure & Private** — No external backend, data stays in your browser
+- **Chat History** — Persisted using Puter's cloud KV storage
+- **PWA Support** — Installable on mobile devices, to install on mobiles simply add the demo link to home screen.
+- **Responsive Design** — Works seamlessly on both desktop and mobile
 
 ## Screenshots
 Desktop Home and Chat View
