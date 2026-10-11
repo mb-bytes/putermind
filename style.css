@@ -18,6 +18,30 @@
   background-position: center;
 }
 
+#login-view {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+#login-view::-webkit-scrollbar {
+  width: 6px;
+}
+
+#login-view::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#login-view::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+#login-view::-webkit-scrollbar-thumb:hover {
+  background: #ea580c;
+}
+
 .nav-login {
   display: flex;
   justify-content: space-between;
@@ -202,7 +226,7 @@
   letter-spacing: 0.0625rem;
   text-transform: uppercase;
   font-weight: 500;
-  color: #ea580c;
+  color: white;
   animation: fade 3s ease-in-out;
 }
 
@@ -311,14 +335,14 @@
 
 
 .feature-content {
-  height: 100%;
+  flex: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-
+  justify-content: flex-start;
   color: white;
+  padding-bottom: 3rem;
 }
 
 .feature-content.slide-in {
@@ -342,7 +366,8 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .feature-title h2 {
@@ -354,63 +379,66 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.5rem;
-  max-width: 60rem;
+  gap: 1.25rem;
+  max-width: 68rem;
   width: 100%;
+  padding: 0 1.5rem;
 }
 
 .feature-card {
   width: 30%;
+  min-width: 15rem;
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 1rem;
-  padding: 1.5rem;
-  transition: transform 0.3s ease;
+  padding: 1rem 1.15rem;
+  transition: transform 0.3s ease, background 0.3s ease;
 }
 
 .feature-card:hover {
   background: rgba(255, 255, 255, 0.2);
   border-color: rgba(234, 88, 12, 0.5);
-  transform: scale(1.1);
+  transform: translateY(-4px);
 }
 
 .feat-icon {
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 0.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.7rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
   background: rgba(255, 140, 50, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .feature-card h3 {
-  font-size: 1.1rem;
-  font-weight: 900;
-  margin-bottom: 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-bottom: 0.4rem;
   color: #fff;
 }
 
 .feature-card p,
 ul {
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.85);
-  line-height: 1.6;
+  line-height: 1.5;
   margin: 0;
 }
 
 .about-sec {
-  height: 100%;
+  flex: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   color: white;
   cursor: default;
+  padding-bottom: 3rem;
 }
 
 .about-title {
@@ -418,8 +446,8 @@ ul {
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin-bottom: 1rem;
-  margin-top: 1.5rem;
+  margin-bottom: 1.25rem;
+  margin-top: 1rem;
 }
 
 .about-title h2 {
@@ -430,10 +458,12 @@ ul {
 .about-content {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  padding: 1.5rem;
+  align-items: stretch;
+  gap: 1.25rem;
+  padding: 0 1.5rem;
   flex-wrap: wrap;
+  max-width: 68rem;
+  width: 100%;
 }
 
 .about-sec.slide-in {
@@ -907,7 +937,7 @@ ul {
     font-size: 0.7rem;
     background-position: right 0.5rem center;
     background-size: 0.75rem;
-    max-width: 7rem;
+    max-width: 9.5rem;
   }
 
   .header-btn {

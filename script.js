@@ -20,10 +20,9 @@ const clearChatBtn = document.getElementById("clear-chat-btn");
 // AI Models
 const defaultModels = [
   { id: "gemini-2.5-flash", name: "Gemini" },
-  { id: "gpt-4.1-nano", name: "OpenAI GPT" },
-  { id: "claude-opus-4", name: "Claude Opus (Reasoning)" },
-  { id: "claude-sonnet-4", name: "Claude Sonnet (Fast)" },
-  { id: "grok-3", name: "Grok (xAI)" },
+  { id: "gpt-5.4-nano", name: "OpenAI GPT" },
+  { id: "claude-sonnet-5-5", name: "Claude" },
+  { id: "grok-4.5", name: "Grok (xAI)" },
 ];
 
 let currentModel = defaultModels[0].id;
@@ -135,6 +134,19 @@ async function extractFileText(file) {
   }
 }
 
+function sanitizeHistory(history) {
+  if (!Array.isArray(history)) return [];
+  const clean = [];
+  for (const msg of history) {
+    if (!msg || !msg.content || !msg.role) continue;
+    if (msg.role !== "user" && msg.role !== "assistant") continue;
+    if (clean.length === 0 && msg.role !== "user") continue;
+    if (clean.length > 0 && clean[clean.length - 1].role === msg.role) continue;
+    clean.push({ role: msg.role, content: msg.content });
+  }
+  return clean;
+}
+
 // Save chat to cloud
 async function saveChatHistory() {
   try {
@@ -148,12 +160,13 @@ async function loadChatHistory() {
   try {
     const data = await puter.kv.get("chat_history");
     if (data) {
-      chatHistory = JSON.parse(data);
+      chatHistory = sanitizeHistory(JSON.parse(data));
       return chatHistory;
     }
   } catch (e) {
     console.error("Failed to load chat history:", e);
   }
+  chatHistory = [];
   return [];
 }
 
@@ -178,13 +191,13 @@ chatForm.addEventListener("submit", async (e) => {
   toggleLoading(true);
 
   // Show user message
+  let userDisplayText = text;
   if (currentFile && currentFile.type.startsWith("image/")) {
-    addMessage("user", `[Attached Image: ${currentFile.name}] ${text}`);
+    userDisplayText = `[Attached Image: ${currentFile.name}] ${text}`;
   } else if (currentFile) {
-    addMessage("user", `[Attached File: ${currentFile.name}] ${text}`);
-  } else {
-    addMessage("user", text);
+    userDisplayText = `[Attached File: ${currentFile.name}] ${text}`;
   }
+  addMessage("user", userDisplayText);
 
   const aiBubble = addMessage("assistant", "");
 
@@ -240,11 +253,10 @@ chatForm.addEventListener("submit", async (e) => {
         const fileContent = await extractFileText(currentFile);
         const fullPrompt = `${prompt}\n\n--- Content of ${currentFile.name} ---\n${fileContent}`;
 
-        const messages = chatHistory.map((msg) => ({
-          role: msg.role,
-          content: msg.content,
-        }));
-        messages.push({ role: "user", content: fullPrompt });
+        const messages = sanitizeHistory([
+          ...chatHistory,
+          { role: "user", content: fullPrompt },
+        ]);
 
         response = await puter.ai.chat(messages, {
           model: currentModel,
@@ -252,16 +264,48 @@ chatForm.addEventListener("submit", async (e) => {
         });
       }
     } else {
-      const messages = chatHistory.map((msg) => ({
-        role: msg.role,
-        content: msg.content,
-      }));
-      messages.push({ role: "user", content: text });
+      let promptToSend = text;
+      const detectedUrl = extractUrl(text);
 
-      response = await puter.ai.chat(messages, {
+      if (detectedUrl) {
+        aiBubble.innerHTML = `<span class="thinking-text">Browsing web page...</span>`;
+        const webText = await fetchWebPage(detectedUrl);
+        if (webText) {
+          promptToSend = `${text}\n\n--- Web page content from ${detectedUrl} ---\n${webText}`;
+        }
+      } else if (shouldSearchWeb(text)) {
+        aiBubble.innerHTML = `<span class="thinking-text">Searching the web...</span>`;
+        const searchInfo = await fetchWebSearch(text);
+        if (searchInfo) {
+          promptToSend = `${text}\n\n--- Real-time web search results ---\n${searchInfo}`;
+        }
+      }
+
+      const messages = sanitizeHistory([
+        ...chatHistory,
+        { role: "user", content: promptToSend },
+      ]);
+
+      const isGpt = currentModel.startsWith("gpt") || currentModel.includes("openai");
+      const chatOptions = {
         model: currentModel,
         stream: true,
-      });
+      };
+
+      if (isGpt && !detectedUrl) {
+        chatOptions.tools = [{ type: "web_search" }];
+      }
+
+      try {
+        response = await puter.ai.chat(messages, chatOptions);
+      } catch (err) {
+        if (chatOptions.tools) {
+          delete chatOptions.tools;
+          response = await puter.ai.chat(messages, chatOptions);
+        } else {
+          throw err;
+        }
+      }
     }
 
     currentFile = null;
@@ -271,11 +315,12 @@ chatForm.addEventListener("submit", async (e) => {
     let firstChunk = true;
 
     for await (const part of response) {
+      const chunkText = part?.text || part?.content || "";
+      if (!chunkText) continue;
       if (firstChunk) {
         aiBubble.innerHTML = "";
         firstChunk = false;
       }
-      const chunkText = part?.text || part?.content || "";
       fullContent += chunkText;
       if (typeof marked !== "undefined") {
         aiBubble.innerHTML = marked.parse(fullContent);
@@ -286,11 +331,7 @@ chatForm.addEventListener("submit", async (e) => {
     }
 
     if (fullContent) {
-      chatHistory.push({
-        role: "user",
-        content:
-          text || `[File: ${currentFile ? currentFile.name : "Unknown"}]`,
-      });
+      chatHistory.push({ role: "user", content: userDisplayText });
       chatHistory.push({ role: "assistant", content: fullContent });
       saveChatHistory();
     }
@@ -304,7 +345,65 @@ chatForm.addEventListener("submit", async (e) => {
 });
 
 // Helper functions
-function addMessage(role, text, skipSave = false) {
+function extractUrl(str) {
+  const match = str.match(
+    /https?:\/\/[^\s]+|(?:www\.)?[a-zA-Z0-9-]+\.(?:com|org|net|io|ai|co|in|app|dev|xyz|info|edu|gov)(?:\/[^\s]*)?/i
+  );
+  if (!match) return null;
+  let url = match[0];
+  if (!url.startsWith("http://") && !url.startsWith("https://")) {
+    url = "https://" + url;
+  }
+  return url;
+}
+
+async function fetchWebPage(url) {
+  try {
+    const res = await puter.net.fetch(url, { signal: AbortSignal.timeout(5000) });
+    if (!res.ok) return null;
+    const html = await res.text();
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    const unwanted = doc.querySelectorAll(
+      "script, style, noscript, svg, nav, footer, header, iframe"
+    );
+    unwanted.forEach((el) => el.remove());
+    const text = (doc.body?.innerText || doc.body?.textContent || "")
+      .replace(/\s+/g, " ")
+      .trim();
+    return text ? text.slice(0, 3500) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+async function fetchWebSearch(query) {
+  try {
+    const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en`;
+    const res = await puter.net.fetch(rssUrl, { signal: AbortSignal.timeout(5000) });
+    if (!res.ok) return null;
+    const xml = await res.text();
+    const items = [
+      ...xml.matchAll(
+        /<item>[\s\S]*?<title>(.*?)<\/title>[\s\S]*?<pubDate>(.*?)<\/pubDate>/g
+      ),
+    ];
+    if (!items.length) return null;
+    return items
+      .slice(0, 5)
+      .map((it) => `- ${it[1]} (${it[2]})`)
+      .join("\n");
+  } catch (e) {
+    return null;
+  }
+}
+
+function shouldSearchWeb(text) {
+  return /\b(latest|news|today|current|happening|update|weather|live|recent|who won|score)\b/i.test(
+    text
+  );
+}
+
+function addMessage(role, text) {
   const row = document.createElement("div");
   row.className = `message-row ${role}`;
   const bubble = document.createElement("div");
@@ -315,12 +414,6 @@ function addMessage(role, text, skipSave = false) {
   row.appendChild(bubble);
   chatArea.appendChild(row);
   scrollToBottom();
-
-  if (text && !skipSave) {
-    chatHistory.push({ role, content: text });
-    saveChatHistory();
-  }
-
   return bubble;
 }
 
@@ -344,9 +437,6 @@ async function loadModels() {
     modelSelect.appendChild(opt);
   });
   modelSelect.value = currentModel;
-  try {
-    await puter.ai.listModels();
-  } catch (e) {}
 }
 
 modelSelect.addEventListener("change", (e) => {
@@ -378,7 +468,7 @@ modeToggleBtn.addEventListener("click", () => {
 async function generateImage(prompt) {
   try {
     const image = await puter.ai.txt2img(prompt, {
-      model: "gpt-image-1-mini",
+      model: "gpt-image-2",
       quality: "low",
     });
     return image;
@@ -403,11 +493,12 @@ loginBtn.addEventListener("click", async () => {
 });
 
 signoutBtn.addEventListener("click", () => {
-  alert("Signing out...");
-  clearChatHistory();
-  puter.auth.signOut();
-  showLogin();
-  chatArea.innerHTML = "";
+  if (confirm("Are you sure you want to sign out?")) {
+    clearChatHistory();
+    puter.auth.signOut();
+    showLogin();
+    chatArea.innerHTML = "";
+  }
 });
 
 infoBtn.addEventListener("click", async () => {
